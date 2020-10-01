@@ -5,7 +5,7 @@ from image_reader import Image
 class Ui_MainWindow(object):
 
     def setupUi(self, MainWindow):
-        MainWindow.resize(500, 400)
+        MainWindow.resize(500, 480)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         MainWindow.setCentralWidget(self.centralwidget)
 
@@ -66,7 +66,7 @@ class Ui_MainWindow(object):
         self.pushButton_histStretch = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_histStretch.setGeometry(QtCore.QRect(285, 80, 75, 23))
         self.pushButton_histEq = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_histEq.setGeometry(QtCore.QRect(285, 80, 75, 23))
+        self.pushButton_histEq.setGeometry(QtCore.QRect(285, 150, 75, 23))
         self.lineEdit_stretchA = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit_stretchA.setGeometry(QtCore.QRect(245, 110, 75, 23))
         self.lineEdit_stretchB = QtWidgets.QLineEdit(self.centralwidget)
@@ -85,6 +85,26 @@ class Ui_MainWindow(object):
         self.lineEdit_window.setGeometry(QtCore.QRect(245, 310, 75, 23))
         self.lineEdit_k = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit_k.setGeometry(QtCore.QRect(325, 310, 75, 23))
+
+        #Filters
+        self.pushButton_blur = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_blur.setGeometry(QtCore.QRect(90,300,75,23))
+        self.pushButton_prewitt = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_prewitt.setGeometry(QtCore.QRect(10,340,75,23))
+        self.pushButton_sobel = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_sobel.setGeometry(QtCore.QRect(90,340,75,23))
+        self.pushButton_laplace = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_laplace.setGeometry(QtCore.QRect(10,380,75,23))
+        self.pushButton_corners = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_corners.setGeometry(QtCore.QRect(90,380,75,23))
+        self.pushButton_kuwahara = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_kuwahara.setGeometry(QtCore.QRect(300,350,75,23))
+        self.pushButton_median3x3 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_median3x3.setGeometry(QtCore.QRect(260,380,75,23))
+        self.pushButton_median5x5 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_median5x5.setGeometry(QtCore.QRect(340,380,75,23))
+        self.lineEdit_window2 = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit_window2.setGeometry(QtCore.QRect(10, 300, 75, 23))
         
 
         self.retranslateUi(MainWindow)
@@ -103,6 +123,14 @@ class Ui_MainWindow(object):
         self.pushButton_manual_bin.clicked.connect(self.manual_bin)
         self.pushButton_auto_bin.clicked.connect(self.auto_bin)
         self.pushButton_local_bin.clicked.connect(self.local_bin)
+        self.pushButton_blur.clicked.connect(self.blur)
+        self.pushButton_prewitt.clicked.connect(self.prewitt)
+        self.pushButton_sobel.clicked.connect(self.sobel)
+        self.pushButton_laplace.clicked.connect(self.laplace)
+        self.pushButton_corners.clicked.connect(self.corners)
+        self.pushButton_kuwahara.clicked.connect(self.kuwahara)
+        self.pushButton_median3x3.clicked.connect(self.median3x3)
+        self.pushButton_median5x5.clicked.connect(self.median5x5)
 
 
     def retranslateUi(self, MainWindow):
@@ -145,6 +173,17 @@ class Ui_MainWindow(object):
         self.lineEdit_threshold.setPlaceholderText(_translate("MainWindow", "threshold"))
         self.lineEdit_window.setPlaceholderText(_translate("MainWindow", "window"))
         self.lineEdit_k.setPlaceholderText(_translate("MainWindow", "k"))
+
+        self.pushButton_blur.setText(_translate("MainWindow", "Blur"))
+        self.pushButton_prewitt.setText(_translate("MainWindow", "Prewitt"))
+        self.pushButton_sobel.setText(_translate("MainWindow", "Sobel"))
+        self.pushButton_laplace.setText(_translate("MainWindow", "Laplace"))
+        self.pushButton_corners.setText(_translate("MainWindow", "Corners"))
+        self.pushButton_kuwahara.setText(_translate("MainWindow", "Kuwahara"))
+        self.pushButton_median3x3.setText(_translate("MainWindow", "Median 3x3"))
+        self.pushButton_median5x5.setText(_translate("MainWindow", "Median 5x5"))
+        self.lineEdit_window2.setPlaceholderText(_translate("MainWindow", "3 -> 3x3"))
+
 
 
     def load_image(self):
@@ -224,6 +263,35 @@ class Ui_MainWindow(object):
         window = int(self.lineEdit_window.text())
         k = float(self.lineEdit_k.text())
         self.img.local_bin(window, k)
+
+    def blur(self):
+        window = int(self.lineEdit_window2.text())
+        self.img.blur(window)
+
+    def prewitt(self):
+        window = int(self.lineEdit_window2.text())
+        self.img.prewitt(window)
+
+    def sobel(self):
+        window = int(self.lineEdit_window2.text())
+        self.img.sobel(window)
+
+    def laplace(self):
+        window = int(self.lineEdit_window2.text())
+        self.img.laplace(window)
+    
+    def corners(self):
+        window = int(self.lineEdit_window2.text())
+        self.img.corners(window)
+
+    def kuwahara(self):
+        self.img.kuwahara()
+
+    def median3x3(self):
+        self.img.median(3)
+
+    def median5x5(self):
+        self.img.median(5)
 
 
 if __name__ == "__main__":
